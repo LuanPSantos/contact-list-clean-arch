@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String
 
-from contact_list_clean_arch.config.db.db_config import Base
+from contact_list_clean_arch.config.db import Base
 
 
 class ContactSchema(Base):

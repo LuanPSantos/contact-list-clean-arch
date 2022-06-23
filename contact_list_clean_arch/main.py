@@ -1,9 +1,7 @@
 import uvicorn
 
 from contact_list_clean_arch import create_application
-from contact_list_clean_arch.config.db.db_config import Base, engine
 
-Base.metadata.create_all(engine)
 
 application = create_application()
 

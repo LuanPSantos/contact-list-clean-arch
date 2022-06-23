@@ -1,5 +1,8 @@
 import uuid
 
+from fastapi import Depends
+
+from contact_list_clean_arch.config.db import start_session
 from contact_list_clean_arch.config.db.contact_schema import ContactSchema
 from contact_list_clean_arch.contact.gateway.contact_command_gateway import ContactCommandGateway
 from contact_list_clean_arch.contact.gateway.contact_query_gateway import ContactQueryGateway
@@ -7,7 +10,7 @@ from contact_list_clean_arch.contact.model.contact import Contact
 
 
 class ContactInMemoryGateway(ContactCommandGateway, ContactQueryGateway):
-    def __init__(self, session):
+    def __init__(self, session=Depends(start_session)):
         super().__init__()
         self.__session = session
 
@@ -15,7 +18,7 @@ class ContactInMemoryGateway(ContactCommandGateway, ContactQueryGateway):
 
         contact_schema = self.__session.get(ContactSchema, contact_id)
 
-        if "result" is None:
+        if contact_schema is None:
             return None
 
         return Contact(

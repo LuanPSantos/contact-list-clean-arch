@@ -3,6 +3,9 @@ __version__ = '0.1.0'
 from fastapi import FastAPI, APIRouter
 
 from contact_list_clean_arch.contact.router import create_contact_router, get_contact_by_id_router
+from contact_list_clean_arch.config.db import Base, engine
+
+Base.metadata.create_all(engine)
 
 
 def create_application() -> FastAPI:

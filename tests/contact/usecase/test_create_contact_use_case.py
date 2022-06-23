@@ -12,13 +12,13 @@ class TestCreateContactUseCase(TestCase):
     def test_create_contact_successfully(self):
         with patch(contact_command_gateway_path) as mock:
             instance = mock.return_value
-            instance.save.return_value = Contact(contact_id=1, name="Luan", phone="99 9999 9999")
+            instance.save.return_value = Contact(contact_id="1", name="Luan", phone="99 9999 9999")
 
         use_case = CreateContactUseCase(instance)
 
         output = use_case.execute(InputModel(Contact(name="Luan", phone="99 9999 9999")))
 
-        self.assertEqual(output.contact.contact_id, 1)
+        self.assertEqual(output.contact.contact_id, "1")
         self.assertEqual(output.contact.name, "Luan")
         self.assertEqual(output.contact.phone, "99 9999 9999")
 

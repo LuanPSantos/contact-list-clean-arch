@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, String
+from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, Session
 from sqlalchemy.pool import StaticPool
 

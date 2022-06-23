@@ -1,14 +1,12 @@
 import logging
 
-from fastapi import APIRouter
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, Depends
 
-from contact_list_clean_arch.config.db.db_config import start_session
+# from contact_list_clean_arch.config.bean import get_create_contact_use_case
 from contact_list_clean_arch.config.exception_handler import with_exception_handler
-from contact_list_clean_arch.contact.gateway.db.contact_command_my_sql_gateway import ContactInMemoryGateway
 from pydantic import BaseModel
 from contact_list_clean_arch.contact.model.contact import Contact
-from contact_list_clean_arch.contact.use_case.create_contact_use_case import CreateContactUseCase, InputModel
+from contact_list_clean_arch.contact.use_case.create_contact_use_case import InputModel, CreateContactUseCase
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -27,15 +25,12 @@ class Response:
 
 
 @router.post("/contacts", status_code=201)
-def create_contact(request: Request) -> Response:
+def create_contact(request: Request, use_case=Depends(CreateContactUseCase)) -> Response:
     logger.info("M=create_contact")
 
-    with start_session() as session:
-        use_case = CreateContactUseCase(ContactInMemoryGateway(session))
+    contact = Contact(name=request.name, phone=request.phone)
+    input_model = InputModel(contact)
 
-        contact = Contact(name=request.name, phone=request.phone)
-        input_model = InputModel(contact)
-
-        output_model = with_exception_handler(lambda: use_case.execute(input_model))
+    output_model = with_exception_handler(lambda: use_case.execute(input_model))
 
     return Response(output_model.contact.contact_id)
