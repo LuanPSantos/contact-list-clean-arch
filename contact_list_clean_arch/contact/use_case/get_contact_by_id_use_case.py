@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class InputModel:
-    def __init__(self, contact_id: int):
+    def __init__(self, contact_id: str):
         self.contact_id = contact_id
 
 

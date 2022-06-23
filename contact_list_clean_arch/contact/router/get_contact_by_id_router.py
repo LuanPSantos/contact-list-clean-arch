@@ -1,7 +1,9 @@
 from fastapi import APIRouter
 import logging
 
-from contact_list_clean_arch.config.db.db_config import get_session
+from sqlalchemy.orm import Session
+
+from contact_list_clean_arch.config.db.db_config import start_session, engine
 from contact_list_clean_arch.config.exception_handler import with_exception_handler
 from contact_list_clean_arch.contact.gateway.db.contact_command_my_sql_gateway import ContactInMemoryGateway
 from contact_list_clean_arch.contact.model.contact import Contact
@@ -19,12 +21,14 @@ class Response:
 
 
 @router.get("/contacts/{contact_id}")
-def get_contact_by_id(contact_id: int) -> Response:
+def get_contact_by_id(contact_id: str) -> Response:
     logger.info(f"M=get_contact_by_id, contact_id={contact_id}")
-    use_case = GetContactByIdUseCase(ContactInMemoryGateway(get_session))
 
-    input_model = InputModel(contact_id)
+    with Session(engine) as session:
+        use_case = GetContactByIdUseCase(ContactInMemoryGateway(session))
 
-    output_model = with_exception_handler(lambda: use_case.execute(input_model))
+        input_model = InputModel(contact_id)
+
+        output_model = with_exception_handler(lambda: use_case.execute(input_model))
 
     return Response(output_model.contact)

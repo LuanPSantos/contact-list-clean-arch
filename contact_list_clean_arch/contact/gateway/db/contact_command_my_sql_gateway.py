@@ -1,38 +1,41 @@
 import uuid
 
-from contact_list_clean_arch.config.db.db_config import ContactSchema
+from contact_list_clean_arch.config.db.contact_schema import ContactSchema
 from contact_list_clean_arch.contact.gateway.contact_command_gateway import ContactCommandGateway
 from contact_list_clean_arch.contact.gateway.contact_query_gateway import ContactQueryGateway
 from contact_list_clean_arch.contact.model.contact import Contact
 
 
 class ContactInMemoryGateway(ContactCommandGateway, ContactQueryGateway):
-    def __init__(self, get_session):
+    def __init__(self, session):
         super().__init__()
-        self.__get_session = get_session
+        self.__session = session
 
-    def get_by_id(self, contact_id: int) -> Contact | None:
+    def get_by_id(self, contact_id: str) -> Contact | None:
 
-        if contact_id != 1:
+        contact_schema = self.__session.get(ContactSchema, contact_id)
+
+        if "result" is None:
             return None
 
         return Contact(
-            contact_id=1,
-            name="Luan",
-            phone="99 99999 9999"
+            contact_id=contact_schema.contact_id,
+            name=contact_schema.name,
+            phone=contact_schema.phone
         )
 
     def save(self, contact: Contact) -> Contact:
-        session = self.__get_session()
 
         contact_schema = ContactSchema(contact_id=str(uuid.uuid4()), name=contact.name, phone=contact.phone)
 
-        session.add(contact_schema)
-        session.flush()
+        self.__session.begin()
 
-        #print(contact_schema)
+        self.__session.add(contact_schema)
+
+        self.__session.commit()
+
         return Contact(
-            contact_id=None,
-            name="contact_schema.name",
-            phone="contact_schema.phone"
+            contact_id=contact_schema.contact_id,
+            name=contact_schema.name,
+            phone=contact_schema.phone
         )
