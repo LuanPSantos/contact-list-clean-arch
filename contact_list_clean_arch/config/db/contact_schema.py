@@ -9,3 +9,6 @@ class ContactSchema(Base):
     contact_id = Column(String, primary_key=True)
     name = Column(String)
     phone = Column(String)
+
+    def __repr__(self):
+        return f"ContactSchema(contact_id='{self.contact_id}', name='{self.name}', phone='{self.phone}')"

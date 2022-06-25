@@ -22,7 +22,7 @@ class TestGetContactByIdUseCase(TestCase):
         self.assertEqual(output.contact.name, "Luan")
         self.assertEqual(output.contact.phone, "99 9999 9999")
 
-        instance.get_by_id.assert_called_once_with(1)
+        instance.get_by_id.assert_called_once()
 
     def test_get_contact_by_id_fail(self):
         with patch(contact_query_gateway_path) as mock:
