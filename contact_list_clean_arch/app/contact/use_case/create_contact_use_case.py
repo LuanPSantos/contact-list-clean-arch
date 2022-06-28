@@ -1,8 +1,5 @@
 import logging
 
-from fastapi import Depends
-
-from contact_list_clean_arch.app.config.bean import get_contact_command_gateway
 from contact_list_clean_arch.app.contact.gateway.contact_command_gateway import ContactCommandGateway
 from contact_list_clean_arch.app.contact.model.contact import Contact
 
@@ -20,7 +17,7 @@ class OutputModel:
 
 
 class CreateContactUseCase:
-    def __init__(self, contact_command_gateway: ContactCommandGateway = Depends(get_contact_command_gateway)):
+    def __init__(self, contact_command_gateway: ContactCommandGateway):
         self.__contact_command_gateway = contact_command_gateway
 
     def execute(self, input_model: InputModel) -> OutputModel:

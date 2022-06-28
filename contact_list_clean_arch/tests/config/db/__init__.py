@@ -10,5 +10,17 @@ engine = create_engine(
 
 
 def start_test_session():
-    return Session(engine)
+    db = Session(engine)
+    print("init-session")
+    try:
+        print("before-session-use")
+        yield db
+        db.commit()
+        print("after-session-use")
+    except Exception:
+        print("session-rollback")
+        db.rollback()
+    finally:
+        print("session-ends")
+        db.close()
 

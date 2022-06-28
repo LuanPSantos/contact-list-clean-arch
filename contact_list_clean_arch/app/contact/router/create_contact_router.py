@@ -2,10 +2,11 @@ import logging
 
 from fastapi import APIRouter, Depends
 
+from contact_list_clean_arch.app.config.bean import get_create_contact_use_case
 from contact_list_clean_arch.app.config.exception_handler import with_exception_handler
 from pydantic import BaseModel
 from contact_list_clean_arch.app.contact.model.contact import Contact
-from contact_list_clean_arch.app.contact.use_case.create_contact_use_case import InputModel, CreateContactUseCase
+from contact_list_clean_arch.app.contact.use_case.create_contact_use_case import InputModel
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -24,7 +25,7 @@ class Response:
 
 
 @router.post("/contacts", status_code=201)
-def create_contact(request: Request, use_case=Depends(CreateContactUseCase)) -> Response:
+def create_contact(request: Request, use_case=Depends(get_create_contact_use_case)) -> Response:
     logger.info("M=create_contact")
 
     contact = Contact(name=request.name, phone=request.phone)
