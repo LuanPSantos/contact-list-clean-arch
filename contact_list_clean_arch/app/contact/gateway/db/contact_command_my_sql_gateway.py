@@ -31,11 +31,7 @@ class ContactInMemoryGateway(ContactCommandGateway, ContactQueryGateway):
 
         contact_schema = ContactSchema(contact_id=str(uuid.uuid4()), name=contact.name, phone=contact.phone)
 
-        self.__session.begin()
-
         self.__session.add(contact_schema)
-
-        self.__session.commit()
 
         return Contact(
             contact_id=contact_schema.contact_id,

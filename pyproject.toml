@@ -2,7 +2,7 @@
 name = "contact_list_clean_arch"
 version = "0.1.0"
 description = ""
-authors = ["Luan Santos <luan.pereira@mercadolivre.com>"]
+authors = ["Luan Santos"]
 
 [tool.poetry.scripts]
 start = "contact_list_clean_arch.app.main:start"
