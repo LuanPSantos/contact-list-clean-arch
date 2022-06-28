@@ -1,2 +1,0 @@
-contact_query_gateway_path = 'contact_list_clean_arch.contact.gateway.contact_query_gateway.ContactQueryGateway'
-contact_command_gateway_path = 'contact_list_clean_arch.contact.gateway.contact_command_gateway.ContactCommandGateway'

@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "contact-list-clean-arch"
+name = "contact_list_clean_arch"
 version = "0.1.0"
 description = ""
 authors = ["Luan Santos <luan.pereira@mercadolivre.com>"]
 
 [tool.poetry.scripts]
-start = "contact_list_clean_arch.main:start"
+start = "contact_list_clean_arch.app.main:start"
 
 [tool.poetry.dependencies]
 python = "^3.10"
