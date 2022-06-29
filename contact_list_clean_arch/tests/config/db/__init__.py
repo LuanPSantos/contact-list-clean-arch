@@ -24,3 +24,6 @@ def start_test_session():
         print("session-ends")
         db.close()
 
+
+def start_local_test_session():
+    return Session(engine)
