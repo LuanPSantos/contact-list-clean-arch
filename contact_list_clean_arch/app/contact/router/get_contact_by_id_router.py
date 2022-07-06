@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends
 import logging
 
 from contact_list_clean_arch.app.config.bean import get_get_contact_by_id_use_case
-from contact_list_clean_arch.app.config.exception_handler import with_exception_handler
 from contact_list_clean_arch.app.contact.model.contact import Contact
 from contact_list_clean_arch.app.contact.use_case.get_contact_by_id_use_case import InputModel
 
@@ -23,6 +22,6 @@ def get_contact_by_id(contact_id: str, use_case=Depends(get_get_contact_by_id_us
 
     input_model = InputModel(contact_id)
 
-    output_model = with_exception_handler(lambda: use_case.execute(input_model))
+    output_model = use_case.execute(input_model)
 
     return Response(output_model.contact)

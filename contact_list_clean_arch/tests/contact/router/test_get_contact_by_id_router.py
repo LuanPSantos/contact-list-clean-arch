@@ -28,4 +28,4 @@ class TestGetContactByIdRouter(IntegrationTestCase):
         json = response.json()
 
         self.assertEqual(404, response.status_code)
-        self.assertEqual("Contact not found", json["detail"])
+        self.assertEqual("Contact not found", json["message"])

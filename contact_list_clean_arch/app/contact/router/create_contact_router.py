@@ -3,7 +3,6 @@ import logging
 from fastapi import APIRouter, Depends
 
 from contact_list_clean_arch.app.config.bean import get_create_contact_use_case
-from contact_list_clean_arch.app.config.exception_handler import with_exception_handler
 from pydantic import BaseModel
 from contact_list_clean_arch.app.contact.model.contact import Contact
 from contact_list_clean_arch.app.contact.use_case.create_contact_use_case import InputModel
@@ -31,6 +30,6 @@ def create_contact(request: Request, use_case=Depends(get_create_contact_use_cas
     contact = Contact(name=request.name, phone=request.phone)
     input_model = InputModel(contact)
 
-    output_model = with_exception_handler(lambda: use_case.execute(input_model))
+    output_model = use_case.execute(input_model)
 
     return Response(output_model.contact.contact_id)
