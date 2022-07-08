@@ -23,12 +23,12 @@ class Response:
         self.contact_id = contact_id
 
 
-@router.post("/contacts", status_code=201)
-def create_contact(request: Request, use_case=Depends(get_create_contact_use_case)) -> Response:
+@router.post("/users/{user_id}/contacts", status_code=201)
+def create_contact(user_id: str, request: Request, use_case=Depends(get_create_contact_use_case)) -> Response:
     logger.info("M=create_contact")
 
-    contact = Contact(name=request.name, phone=request.phone)
-    input_model = InputModel(contact)
+    contact = Contact(name=request.name, phone=request.phone, user_id=user_id)
+    input_model = InputModel(contact=contact)
 
     output_model = use_case.execute(input_model)
 

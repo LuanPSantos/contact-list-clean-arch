@@ -16,11 +16,11 @@ class Response:
         self.contact = contact
 
 
-@router.get("/contacts/{contact_id}")
-def get_contact_by_id(contact_id: str, use_case=Depends(get_get_contact_by_id_use_case)) -> Response:
-    logger.info(f"M=get_contact_by_id, contact_id={contact_id}")
+@router.get("/users/{user_id}/contacts/{contact_id}")
+def get_contact_by_id(user_id: str, contact_id: str, use_case=Depends(get_get_contact_by_id_use_case)) -> Response:
+    logger.info(f"M=get_contact_by_id, contact_id={contact_id}, user_id={user_id}")
 
-    input_model = InputModel(contact_id)
+    input_model = InputModel(contact_id, user_id)
 
     output_model = use_case.execute(input_model)
 

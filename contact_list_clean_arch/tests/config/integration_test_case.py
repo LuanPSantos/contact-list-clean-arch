@@ -1,5 +1,6 @@
 import pytest
 
+from contact_list_clean_arch.app.config.db.user_schema import UserSchema
 from contact_list_clean_arch.app.main import application
 from contact_list_clean_arch.tests.config.db import start_local_test_session
 from unittest import TestCase

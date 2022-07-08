@@ -10,27 +10,27 @@ from contact_list_clean_arch.tests.util.mock_path import contact_query_gateway_p
 class TestGetContactByIdUseCase(TestCase):
 
     def test_get_contact_by_id_successfully(self):
-        with patch(contact_query_gateway_path) as mock:
-            instance = mock.return_value
-            instance.get_by_id.return_value = Contact(contact_id="1", name="Luan", phone="99 9999 9999")
+        with patch(contact_query_gateway_path) as contact_query_gateway_mock:
+            contact_query_gateway = contact_query_gateway_mock.return_value
+            contact_query_gateway.get_by_id.return_value = Contact(contact_id="1", name="Luan", phone="99 9999 9999", user_id="1")
 
-        use_case = GetContactByIdUseCase(instance)
+        use_case = GetContactByIdUseCase(contact_query_gateway)
 
-        output = use_case.execute(InputModel("1"))
+        output = use_case.execute(InputModel("1", "1"))
 
         self.assertEqual(output.contact.contact_id, "1")
         self.assertEqual(output.contact.name, "Luan")
         self.assertEqual(output.contact.phone, "99 9999 9999")
 
-        instance.get_by_id.assert_called_once()
+        contact_query_gateway.get_by_id.assert_called_once()
 
     def test_get_contact_by_id_fail(self):
-        with patch(contact_query_gateway_path) as mock:
-            instance = mock.return_value
-            instance.get_by_id.return_value = None
+        with patch(contact_query_gateway_path) as contact_query_gateway_mock:
+            contact_query_gateway = contact_query_gateway_mock.return_value
+            contact_query_gateway.get_by_id.return_value = None
 
-        use_case = GetContactByIdUseCase(instance)
+        use_case = GetContactByIdUseCase(contact_query_gateway)
 
-        self.assertRaises(ContactNotFoundException, use_case.execute, InputModel("1"))
+        self.assertRaises(ContactNotFoundException, use_case.execute, InputModel("1", "1"))
 
-        instance.get_by_id.assert_called_once_with("1")
+        contact_query_gateway.get_by_id.assert_called_once_with("1")

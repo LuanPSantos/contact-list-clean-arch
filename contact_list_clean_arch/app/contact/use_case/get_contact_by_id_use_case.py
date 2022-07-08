@@ -8,8 +8,9 @@ logger = logging.getLogger(__name__)
 
 
 class InputModel:
-    def __init__(self, contact_id: str):
+    def __init__(self, contact_id: str, user_id: str):
         self.contact_id = contact_id
+        self.user_id = user_id
 
 
 class OutputModel:
@@ -26,7 +27,7 @@ class GetContactByIdUseCase:
 
         contact = self.contact_query_gateway.get_by_id(input_model.contact_id)
 
-        if contact is None:
+        if contact is None or contact.user_id != input_model.user_id:
             logger.error(f"M=execute, exception=ContactNotFoundException")
             raise ContactNotFoundException()
 
