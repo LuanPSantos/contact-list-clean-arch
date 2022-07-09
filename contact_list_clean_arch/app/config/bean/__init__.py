@@ -10,6 +10,7 @@ from contact_list_clean_arch.app.user.gateway.db.user_in_memory_gateway import U
 from contact_list_clean_arch.app.user.gateway.user_command_gateway import UserCommandGateway
 from contact_list_clean_arch.app.user.gateway.user_query_gateway import UserQueryGateway
 from contact_list_clean_arch.app.user.use_case.create_user_use_case import CreateUserUseCase
+from contact_list_clean_arch.app.user.use_case.get_user_by_id_use_case import GetUserByIdUseCase
 
 
 def get_contact_command_gateway(session=Depends(start_session)) -> ContactCommandGateway:
@@ -39,3 +40,7 @@ def get_get_contact_by_id_use_case(contact_query_gateway=Depends(get_contact_que
 
 def get_create_user_use_case(user_command_gateway=Depends(get_user_command_gateway)) -> CreateUserUseCase:
     return CreateUserUseCase(user_command_gateway)
+
+
+def get_get_user_by_id_use_case(user_query_gateway=Depends(get_user_query_gateway)) -> GetUserByIdUseCase:
+    return GetUserByIdUseCase(user_query_gateway)

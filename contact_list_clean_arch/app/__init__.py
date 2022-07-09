@@ -8,7 +8,7 @@ from contact_list_clean_arch.app.contact.exception.contact_not_found_exception i
 from contact_list_clean_arch.app.contact.router import get_contact_by_id_router, create_contact_router
 from contact_list_clean_arch.app.config.db import Base, engine
 from contact_list_clean_arch.app.user.exception.user_not_fount_exception import UserNotFoundException
-from contact_list_clean_arch.app.user.router import create_user_router
+from contact_list_clean_arch.app.user.router import create_user_router, get_user_by_id_router
 
 Base.metadata.create_all(engine)
 
@@ -33,5 +33,6 @@ def __application_router() -> APIRouter:
     router.include_router(create_contact_router.router)
     router.include_router(get_contact_by_id_router.router)
     router.include_router(create_user_router.router)
+    router.include_router(get_user_by_id_router.router)
 
     return router
