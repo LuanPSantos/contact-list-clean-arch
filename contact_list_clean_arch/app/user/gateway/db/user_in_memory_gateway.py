@@ -1,5 +1,6 @@
 import uuid
 
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from contact_list_clean_arch.app.config.db.user_schema import UserSchema
@@ -30,6 +31,20 @@ class UserInMemoryGateway(UserCommandGateway, UserQueryGateway):
     def get_by_id(self, user_id: str) -> User | None:
 
         user_schema = self.__session.get(UserSchema, user_id)
+
+        if user_schema is None:
+            return None
+
+        return User(
+            user_id=user_schema.user_id,
+            name=user_schema.name,
+            email=user_schema.email,
+            password=user_schema.password
+        )
+
+    def get_by_email(self, email: str) -> User | None:
+
+        user_schema = self.__session.execute(select(UserSchema).where(UserSchema.email == email)).fetchone()[0]
 
         if user_schema is None:
             return None

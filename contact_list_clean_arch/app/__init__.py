@@ -2,6 +2,7 @@ __version__ = '0.1.0'
 
 from fastapi import FastAPI, APIRouter
 
+from contact_list_clean_arch.app.auth.router import user_authentiation_router
 from contact_list_clean_arch.app.config.exception_handler import handle_contact_not_found_exception, handle_exception, \
     handle_user_not_found_exception
 from contact_list_clean_arch.app.contact.exception.contact_not_found_exception import ContactNotFoundException
@@ -34,5 +35,6 @@ def __application_router() -> APIRouter:
     router.include_router(get_contact_by_id_router.router)
     router.include_router(create_user_router.router)
     router.include_router(get_user_by_id_router.router)
+    router.include_router(user_authentiation_router.router)
 
     return router
