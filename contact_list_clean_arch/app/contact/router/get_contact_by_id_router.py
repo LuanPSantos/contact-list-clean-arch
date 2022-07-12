@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 import logging
 
+from contact_list_clean_arch.app.auth.middleware.authorization_meddleware import JWTBearerMiddleware
 from contact_list_clean_arch.app.config.bean import get_get_contact_by_id_use_case
 from contact_list_clean_arch.app.contact.model.contact import Contact
 from contact_list_clean_arch.app.contact.use_case.get_contact_by_id_use_case import InputModel
@@ -16,7 +17,8 @@ class Response:
         self.contact = contact
 
 
-@router.get("/users/{user_id}/contacts/{contact_id}")
+@router.get("/users/{user_id}/contacts/{contact_id}",
+            dependencies=[Depends(JWTBearerMiddleware())])
 def get_contact_by_id(user_id: str, contact_id: str, use_case=Depends(get_get_contact_by_id_use_case)) -> Response:
     logger.info(f"M=get_contact_by_id, contact_id={contact_id}, user_id={user_id}")
 

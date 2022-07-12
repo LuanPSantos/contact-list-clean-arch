@@ -2,6 +2,7 @@ import logging
 
 from fastapi import APIRouter, Depends
 
+from contact_list_clean_arch.app.auth.middleware.authorization_meddleware import JWTBearerMiddleware
 from contact_list_clean_arch.app.config.bean import get_create_contact_use_case
 from pydantic import BaseModel
 from contact_list_clean_arch.app.contact.model.contact import Contact
@@ -23,7 +24,9 @@ class Response:
         self.contact_id = contact_id
 
 
-@router.post("/users/{user_id}/contacts", status_code=201)
+@router.post("/users/{user_id}/contacts",
+             status_code=201,
+             dependencies=[Depends(JWTBearerMiddleware())])
 def create_contact(user_id: str, request: Request, use_case=Depends(get_create_contact_use_case)) -> Response:
     logger.info("M=create_contact")
 
