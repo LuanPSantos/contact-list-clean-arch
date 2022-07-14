@@ -1,4 +1,5 @@
 from contact_list_clean_arch.app.config.db.user_schema import UserSchema
+from contact_list_clean_arch.app.config.security.security_config import crypt_context
 from contact_list_clean_arch.tests.config.integration_test_case import IntegrationTestCase
 
 
@@ -15,4 +16,4 @@ class TestCreateUserRouter(IntegrationTestCase):
 
         self.assertEqual("Jose", user_schema.name)
         self.assertEqual("jose@email.com", user_schema.email)
-        self.assertEqual("123", user_schema.password)
+        self.assertTrue(crypt_context.verify("123", user_schema.password))

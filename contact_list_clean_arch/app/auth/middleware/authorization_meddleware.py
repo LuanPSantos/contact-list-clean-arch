@@ -18,7 +18,7 @@ class JWTBearerMiddleware(HTTPBearer):
 
     async def __call__(self, request: Request):
         credentials: HTTPAuthorizationCredentials = await super(JWTBearerMiddleware, self).__call__(request)
-        if credentials and not credentials.scheme == "Bearer":
+        if credentials and credentials.scheme == "Bearer":
             verify_jwt(credentials.credentials)
         else:
             raise HTTPException(status_code=403, detail="Unauthorized")

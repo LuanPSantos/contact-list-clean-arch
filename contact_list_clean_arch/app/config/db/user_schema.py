@@ -7,7 +7,7 @@ class UserSchema(Base):
     __tablename__ = 'user'
 
     user_id = Column(String, primary_key=True)
-    name = Column(String)
+    name = Column(String, unique=True)
     email = Column(String)
     password = Column(String)
 
