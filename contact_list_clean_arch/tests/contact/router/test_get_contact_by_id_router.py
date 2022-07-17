@@ -6,7 +6,7 @@ class TestGetContactByIdRouter(IntegrationTestCase):
 
     def test_get_contact_by_id_successfully(self):
         auth_info = self.create_and_authenticate_user()
-        contact_schema = self.create_contact(auth_info.user_schema.user_id)
+        contact_schema = self.create_contact_in_db(auth_info.user_schema.user_id)
 
         response = self._httpClient.get(f"users/{auth_info.user_schema.user_id}/contacts/{contact_schema.contact_id}",
                                         headers={"Authorization": auth_info.token})

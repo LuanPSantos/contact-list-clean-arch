@@ -1,24 +1,26 @@
 from fastapi import Depends
 
-from contact_list_clean_arch.app.auth.gateway.authorization_token_gateway import AuthorizationTokenGateway
-from contact_list_clean_arch.app.auth.gateway.cryptography_gateway import CryptographyGateway
-from contact_list_clean_arch.app.auth.gateway.lib.authorization_jwt_token import AuthorizationJwtTokenGateway
-from contact_list_clean_arch.app.auth.gateway.lib.cryptography_passlib_gateway import CryptographyPasslibGateway
-from contact_list_clean_arch.app.auth.use_case.user_authentication_use_case import UserAuthenticationUseCase
+from contact_list_clean_arch.app.domain.auth.gateway.authorization_token_gateway import AuthorizationTokenGateway
+from contact_list_clean_arch.app.domain.auth.gateway.cryptography_gateway import CryptographyGateway
+from contact_list_clean_arch.app.domain.auth.gateway.lib.authorization_jwt_token import AuthorizationJwtTokenGateway
+from contact_list_clean_arch.app.domain.auth.gateway.lib.cryptography_passlib_gateway import CryptographyPasslibGateway
+from contact_list_clean_arch.app.domain.auth.use_case.user_authentication_use_case import UserAuthenticationUseCase
 from contact_list_clean_arch.app.config.db import start_session
 from contact_list_clean_arch.app.config.security.security_config import crypt_context
-from contact_list_clean_arch.app.contact.gateway.contact_command_gateway import ContactCommandGateway
-from contact_list_clean_arch.app.contact.gateway.contact_query_gateway import ContactQueryGateway
-from contact_list_clean_arch.app.contact.gateway.db.contact_in_memory_gateway import ContactInMemoryGateway
-from contact_list_clean_arch.app.contact.use_case.create_contact_use_case import CreateContactUseCase
-from contact_list_clean_arch.app.contact.use_case.get_contact_by_id_use_case import GetContactByIdUseCase
-from contact_list_clean_arch.app.user.gateway.db.user_in_memory_gateway import UserInMemoryGateway
-from contact_list_clean_arch.app.user.gateway.user_command_gateway import UserCommandGateway
-from contact_list_clean_arch.app.user.gateway.user_query_gateway import UserQueryGateway
-from contact_list_clean_arch.app.user.use_case.create_user_use_case import CreateUserUseCase
-from contact_list_clean_arch.app.user.use_case.get_user_by_id_use_case import GetUserByIdUseCase
+from contact_list_clean_arch.app.domain.contact.gateway.contact_command_gateway import ContactCommandGateway
+from contact_list_clean_arch.app.domain.contact.gateway.contact_query_gateway import ContactQueryGateway
+from contact_list_clean_arch.app.domain.contact.gateway.db.contact_in_memory_gateway import ContactInMemoryGateway
+from contact_list_clean_arch.app.domain.contact.use_case.create_contact_use_case import CreateContactUseCase
+from contact_list_clean_arch.app.domain.contact.use_case.get_contact_by_id_use_case import GetContactByIdUseCase
+from contact_list_clean_arch.app.domain.user.gateway.db.user_in_memory_gateway import UserInMemoryGateway
+from contact_list_clean_arch.app.domain.user.gateway.user_command_gateway import UserCommandGateway
+
+from contact_list_clean_arch.app.domain.user.gateway.user_query_gateway import UserQueryGateway
+from contact_list_clean_arch.app.domain.user.use_case.create_user_use_case import CreateUserUseCase
+from contact_list_clean_arch.app.domain.user.use_case.get_user_by_id_use_case import GetUserByIdUseCase
 
 
+# TODO separar factories
 def get_contact_command_gateway(session=Depends(start_session)) -> ContactCommandGateway:
     return ContactInMemoryGateway(session)
 

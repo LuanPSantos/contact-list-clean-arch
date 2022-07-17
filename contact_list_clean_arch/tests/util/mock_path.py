@@ -1,8 +1,8 @@
-from contact_list_clean_arch.app.auth.gateway.cryptography_gateway import CryptographyGateway
-from contact_list_clean_arch.app.contact.gateway.contact_command_gateway import ContactCommandGateway
-from contact_list_clean_arch.app.contact.gateway.contact_query_gateway import ContactQueryGateway
-from contact_list_clean_arch.app.user.gateway.user_command_gateway import UserCommandGateway
-from contact_list_clean_arch.app.user.gateway.user_query_gateway import UserQueryGateway
+from contact_list_clean_arch.app.domain.auth.gateway.cryptography_gateway import CryptographyGateway
+from contact_list_clean_arch.app.domain.contact.gateway.contact_command_gateway import ContactCommandGateway
+from contact_list_clean_arch.app.domain.contact.gateway.contact_query_gateway import ContactQueryGateway
+from contact_list_clean_arch.app.domain.user.gateway import UserCommandGateway
+from contact_list_clean_arch.app.domain.user.gateway.user_query_gateway import UserQueryGateway
 
 
 def __path_of(clazz) -> str:

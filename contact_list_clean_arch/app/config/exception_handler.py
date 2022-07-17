@@ -2,9 +2,9 @@
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from contact_list_clean_arch.app.auth.exception.UnauthenticatedException import UnauthenticatedException
-from contact_list_clean_arch.app.contact.exception.contact_not_found_exception import ContactNotFoundException
-from contact_list_clean_arch.app.user.exception.user_not_fount_exception import UserNotFoundException
+from contact_list_clean_arch.app.domain.auth.exception.UnauthenticatedException import UnauthenticatedException
+from contact_list_clean_arch.app.domain.contact.exception.contact_not_found_exception import ContactNotFoundException
+from contact_list_clean_arch.app.domain.user.exception.user_not_fount_exception import UserNotFoundException
 
 
 async def handle_contact_not_found_exception(request: Request, exc: ContactNotFoundException):
