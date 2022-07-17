@@ -22,3 +22,11 @@ class TestCreateContactRouter(IntegrationTestCase):
 
         self.assertEqual("Luan", contact_schema.name)
         self.assertEqual("99 9999 9999", contact_schema.phone)
+
+    def test_not_create_contact_due_unauthenticated(self):
+        auth_info = self.create_and_authenticate_user()
+
+        response = self._httpClient.post(f"users/{auth_info.user_schema.user_id}/contacts",
+                                         json={"name": "Luan", "phone": "99 9999 9999"})
+
+        self.assertEqual(403, response.status_code)

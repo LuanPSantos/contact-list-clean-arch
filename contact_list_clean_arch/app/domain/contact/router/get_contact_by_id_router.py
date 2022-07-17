@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 import logging
 
 from contact_list_clean_arch.app.domain.auth.middleware.authorization_meddleware import JWTBearerMiddleware
-from contact_list_clean_arch.app.config.bean import get_get_contact_by_id_use_case
+from contact_list_clean_arch.app.config.factory import get_get_contact_by_id_use_case
 from contact_list_clean_arch.app.domain.contact.model.contact import Contact
 from contact_list_clean_arch.app.domain.contact.use_case.get_contact_by_id_use_case import InputModel
 

@@ -3,7 +3,7 @@ import logging
 from fastapi import APIRouter, Depends
 
 from contact_list_clean_arch.app.domain.auth.middleware.authorization_meddleware import JWTBearerMiddleware
-from contact_list_clean_arch.app.config.bean import get_create_contact_use_case
+from contact_list_clean_arch.app.config.factory import get_create_contact_use_case
 from pydantic import BaseModel
 from contact_list_clean_arch.app.domain.contact.model.contact import Contact
 from contact_list_clean_arch.app.domain.contact.use_case.create_contact_use_case import InputModel

@@ -26,3 +26,10 @@ class TestGetUserByIdRouter(IntegrationTestCase):
 
         self.assertEqual(404, response.status_code)
         self.assertEqual("User not found", json["message"])
+
+    def test_not_get_user_by_id_due_unauthenticated(self):
+        auth_info = self.create_and_authenticate_user()
+
+        response = self._httpClient.get(f"users/{auth_info.user_schema.user_id}")
+
+        self.assertEqual(403, response.status_code)

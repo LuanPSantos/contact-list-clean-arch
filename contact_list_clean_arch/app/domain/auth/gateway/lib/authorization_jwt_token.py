@@ -1,6 +1,4 @@
 from datetime import timedelta, datetime
-
-# noinspection PyPackageRequirements
 from jose import jwt
 
 from contact_list_clean_arch.app.domain.auth.gateway.authorization_token_gateway import AuthorizationTokenGateway

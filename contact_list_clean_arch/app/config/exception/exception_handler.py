@@ -2,7 +2,8 @@
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
-from contact_list_clean_arch.app.domain.auth.exception.UnauthenticatedException import UnauthenticatedException
+from contact_list_clean_arch.app.domain.auth.exception.unauthenticated_exception import UnauthenticatedException
+from contact_list_clean_arch.app.domain.auth.exception.unauthorized_exception import UnauthorizedException
 from contact_list_clean_arch.app.domain.contact.exception.contact_not_found_exception import ContactNotFoundException
 from contact_list_clean_arch.app.domain.user.exception.user_not_fount_exception import UserNotFoundException
 
@@ -31,6 +32,15 @@ async def handle_unauthenticated_exception(request: Request, exc: Unauthenticate
     return JSONResponse(
         status_code=403,
         content={"message": f"Invalid email or password"},
+    )
+
+
+async def handle_unauthorized_exception(request: Request, exc: UnauthorizedException):
+    print(request)
+    print(exc)
+    return JSONResponse(
+        status_code=403,
+        content={"message": f"Unauthorized"},
     )
 
 

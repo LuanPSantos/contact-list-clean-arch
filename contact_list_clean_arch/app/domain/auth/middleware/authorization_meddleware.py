@@ -1,15 +1,16 @@
-from fastapi import Request, HTTPException, Depends
+from fastapi import Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jose import jwt
 
 from contact_list_clean_arch.app.config.security.security_config import SECRET_KEY, ALGORITHM
+from contact_list_clean_arch.app.domain.auth.exception.unauthorized_exception import UnauthorizedException
 
 
 def verify_jwt(jwt_token: str):
     try:
         jwt.decode(jwt_token, SECRET_KEY, algorithms=[ALGORITHM]).get("sub")
     except Exception:
-        raise HTTPException(status_code=403, detail="Unauthorized")
+        raise UnauthorizedException()
 
 
 class JWTBearerMiddleware(HTTPBearer):
@@ -21,5 +22,5 @@ class JWTBearerMiddleware(HTTPBearer):
         if credentials and credentials.scheme == "Bearer":
             verify_jwt(credentials.credentials)
         else:
-            raise HTTPException(status_code=403, detail="Unauthorized")
+            raise UnauthorizedException()
 

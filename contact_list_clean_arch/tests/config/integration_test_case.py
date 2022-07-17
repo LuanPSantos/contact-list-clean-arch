@@ -2,6 +2,7 @@ import uuid
 
 import pytest
 
+from contact_list_clean_arch.app.config.factory import get_crytography_gateway
 from contact_list_clean_arch.app.domain.auth.gateway.lib.authorization_jwt_token import AuthorizationJwtTokenGateway
 from contact_list_clean_arch.app.config.db.contact_schema import ContactSchema
 from contact_list_clean_arch.app.config.db.user_schema import UserSchema
@@ -11,7 +12,7 @@ from unittest import TestCase
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
-from contact_list_clean_arch.tests.util.teste_factory import create_user, create_contact
+from contact_list_clean_arch.tests.util.teste_factory import create_test_user, create_test_contact
 
 
 class AuthInfo:
@@ -21,9 +22,15 @@ class AuthInfo:
 
 
 def _generate_user_schema() -> UserSchema:
-    user = create_user()
+    crytography_gateway = get_crytography_gateway()
+    user = create_test_user()
 
-    return UserSchema(user_id=user.user_id, name=user.name, email=user.email, password=user.password)
+    return UserSchema(
+        user_id=user.user_id,
+        name=user.name,
+        email=user.email,
+        password=crytography_gateway.hash_password(user.password)
+    )
 
 
 class IntegrationTestCase(TestCase):
@@ -56,7 +63,7 @@ class IntegrationTestCase(TestCase):
         return AuthInfo(user_schema=user_schema, token=token)
 
     def create_contact_in_db(self, user_id: str) -> ContactSchema:
-        contact = create_contact(user_id)
+        contact = create_test_contact(user_id)
 
         self._local_session.begin()
 
