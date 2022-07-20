@@ -8,8 +8,8 @@ class TestGetContactByIdRouter(IntegrationTestCase):
         auth_info = self.create_and_authenticate_user()
         contact_schema = self.create_contact_in_db(auth_info.user_schema.user_id)
 
-        response = self._httpClient.get(f"users/{auth_info.user_schema.user_id}/contacts/{contact_schema.contact_id}",
-                                        headers={"Authorization": auth_info.token})
+        response = self._http_client.get(f"users/{auth_info.user_schema.user_id}/contacts/{contact_schema.contact_id}",
+                                         headers={"Authorization": auth_info.token})
 
         json = response.json()
         self.assertEqual(200, response.status_code)
@@ -21,8 +21,8 @@ class TestGetContactByIdRouter(IntegrationTestCase):
 
         contact_id = str(uuid.uuid4())
 
-        response = self._httpClient.get(f"users/{auth_info.user_schema.user_id}/contacts/{contact_id}",
-                                        headers={"Authorization": auth_info.token})
+        response = self._http_client.get(f"users/{auth_info.user_schema.user_id}/contacts/{contact_id}",
+                                         headers={"Authorization": auth_info.token})
 
         json = response.json()
 
@@ -33,6 +33,6 @@ class TestGetContactByIdRouter(IntegrationTestCase):
         auth_info = self.create_and_authenticate_user()
         contact_schema = self.create_contact_in_db(auth_info.user_schema.user_id)
 
-        response = self._httpClient.get(f"users/{auth_info.user_schema.user_id}/contacts/{contact_schema.contact_id}")
+        response = self._http_client.get(f"users/{auth_info.user_schema.user_id}/contacts/{contact_schema.contact_id}")
 
         self.assertEqual(403, response.status_code)

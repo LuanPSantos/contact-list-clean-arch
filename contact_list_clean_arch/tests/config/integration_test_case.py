@@ -34,14 +34,13 @@ def _generate_user_schema() -> UserSchema:
 
 
 class IntegrationTestCase(TestCase):
-    _httpClient = TestClient(application)
+    _http_client = TestClient(application)
 
     __local_session: Session
     __authorization_token_gateway = AuthorizationJwtTokenGateway()
 
     @pytest.fixture(autouse=True)
     def run_before_and_after_tests(self):
-
         self._local_session = start_local_test_session()
         print("---- BEFORE TEST ----")
         yield

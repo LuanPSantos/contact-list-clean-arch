@@ -9,9 +9,9 @@ class TestCreateContactRouter(IntegrationTestCase):
 
         auth_info = self.create_and_authenticate_user()
 
-        response = self._httpClient.post(f"users/{auth_info.user_schema.user_id}/contacts",
-                                         json={"name": "Luan", "phone": "99 9999 9999"},
-                                         headers={"Authorization": auth_info.token})
+        response = self._http_client.post(f"users/{auth_info.user_schema.user_id}/contacts",
+                                          json={"name": "Luan", "phone": "99 9999 9999"},
+                                          headers={"Authorization": auth_info.token})
 
         self.assertEqual(201, response.status_code)
 
@@ -26,7 +26,7 @@ class TestCreateContactRouter(IntegrationTestCase):
     def test_not_create_contact_due_unauthenticated(self):
         auth_info = self.create_and_authenticate_user()
 
-        response = self._httpClient.post(f"users/{auth_info.user_schema.user_id}/contacts",
-                                         json={"name": "Luan", "phone": "99 9999 9999"})
+        response = self._http_client.post(f"users/{auth_info.user_schema.user_id}/contacts",
+                                          json={"name": "Luan", "phone": "99 9999 9999"})
 
         self.assertEqual(403, response.status_code)

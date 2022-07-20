@@ -8,8 +8,8 @@ class TestUserAuthenticationRouter(IntegrationTestCase):
 
         auth_info = self.create_and_authenticate_user()
 
-        response = self._httpClient.post(f"login",
-                                         json={"email": auth_info.user_schema.email, "password": PLAIN_PASSWORD})
+        response = self._http_client.post(f"login",
+                                          json={"email": auth_info.user_schema.email, "password": PLAIN_PASSWORD})
 
         self.assertEqual(200, response.status_code)
 
@@ -20,8 +20,8 @@ class TestUserAuthenticationRouter(IntegrationTestCase):
 
         auth_info = self.create_and_authenticate_user()
 
-        response = self._httpClient.post(f"login",
-                                         json={"email": auth_info.user_schema.email, "password": "XX"})
+        response = self._http_client.post(f"login",
+                                          json={"email": auth_info.user_schema.email, "password": "XX"})
 
         self.assertEqual(403, response.status_code)
 

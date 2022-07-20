@@ -1,4 +1,4 @@
-
+from requests import HTTPError
 from starlette.requests import Request
 from starlette.responses import JSONResponse
 
@@ -41,6 +41,15 @@ async def handle_unauthorized_exception(request: Request, exc: UnauthorizedExcep
     return JSONResponse(
         status_code=403,
         content={"message": f"Unauthorized"},
+    )
+
+
+async def handle_client_http_error(request: Request, exc: HTTPError):
+    print(request)
+    print(exc)
+    return JSONResponse(
+        status_code=500,
+        content={"message": f"{exc.strerror}"},
     )
 
 
