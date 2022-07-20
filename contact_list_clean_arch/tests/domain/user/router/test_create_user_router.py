@@ -3,12 +3,10 @@ import json
 import requests_mock
 from requests_mock import Mocker
 from sqlalchemy import select
-from starlette.testclient import TestClient
 
 from contact_list_clean_arch.app.config.db.user_schema import UserSchema
 from contact_list_clean_arch.app.config.security.security_config import crypt_context
 from contact_list_clean_arch.app.domain.email.gateway.http.email_http_gateway import EMAIL_SERVICE_URL
-from contact_list_clean_arch.app.main import application
 from contact_list_clean_arch.tests.config.integration_test_case import IntegrationTestCase
 from contact_list_clean_arch.tests.util.teste_factory import create_test_user
 
@@ -18,7 +16,7 @@ class TestCreateUserRouter(IntegrationTestCase):
     @requests_mock.Mocker(real_http=True)
     def test_create_user_successfully(self, email_server_mock: Mocker):
 
-        email_server_mock.post(url="http://localhost:8080/emails/wellcome", status_code=200)
+        email_server_mock.post(url=f"{EMAIL_SERVICE_URL}/emails/wellcome", status_code=200)
 
         user = create_test_user()
 
