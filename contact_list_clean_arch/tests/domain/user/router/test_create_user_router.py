@@ -5,7 +5,7 @@ from requests_mock import Mocker
 from sqlalchemy import select
 
 from contact_list_clean_arch.app.config.db.user_schema import UserSchema
-from contact_list_clean_arch.app.config.security.security_config import crypt_context
+from contact_list_clean_arch.app.config.security.security_config import get_crypt_context
 from contact_list_clean_arch.app.domain.email.gateway.http.email_http_gateway import EMAIL_SERVICE_URL
 from contact_list_clean_arch.tests.config.integration_test_case import IntegrationTestCase
 from contact_list_clean_arch.tests.util.teste_factory import create_test_user
@@ -30,7 +30,7 @@ class TestCreateUserRouter(IntegrationTestCase):
 
         self.assertEqual(user.name, user_schema.name)
         self.assertEqual(user.email, user_schema.email)
-        self.assertTrue(crypt_context.verify(user.password, user_schema.password))
+        self.assertTrue(self._text_crypt_context.verify(user.password, user_schema.password))
 
         wellcome_email_request = json.loads(email_server_mock.last_request.text)
         self.assertEqual(user.name, wellcome_email_request["user_name"])

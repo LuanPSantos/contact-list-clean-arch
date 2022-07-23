@@ -1,8 +1,10 @@
 import uuid
 
+from fastapi import Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from contact_list_clean_arch.app.config.db import start_session
 from contact_list_clean_arch.app.config.db.user_schema import UserSchema
 from contact_list_clean_arch.app.domain.user.gateway.user_command_gateway import UserCommandGateway
 from contact_list_clean_arch.app.domain.user.gateway.user_query_gateway import UserQueryGateway
@@ -11,7 +13,7 @@ from contact_list_clean_arch.app.domain.user.model.user import User
 
 class UserInMemoryGateway(UserCommandGateway, UserQueryGateway):
 
-    def __init__(self, session: Session):
+    def __init__(self, session: Session = Depends(start_session)):
         super().__init__()
         self.__session = session
 

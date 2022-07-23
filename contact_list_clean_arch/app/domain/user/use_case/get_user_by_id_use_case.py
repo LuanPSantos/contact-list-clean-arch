@@ -1,4 +1,7 @@
+from fastapi import Depends
+
 from contact_list_clean_arch.app.domain.user.exception.user_not_fount_exception import UserNotFoundException
+from contact_list_clean_arch.app.domain.user.gateway.db.user_in_memory_gateway import UserInMemoryGateway
 from contact_list_clean_arch.app.domain.user.gateway.user_query_gateway import UserQueryGateway
 from contact_list_clean_arch.app.domain.user.model.user import User
 
@@ -18,7 +21,7 @@ class OutputModel:
 
 
 class GetUserByIdUseCase:
-    def __init__(self, user_query_gateway: UserQueryGateway):
+    def __init__(self, user_query_gateway: UserQueryGateway = Depends(UserInMemoryGateway)):
         self.user_query_gateway = user_query_gateway
 
     def execute(self, input_model: InputModel) -> OutputModel:

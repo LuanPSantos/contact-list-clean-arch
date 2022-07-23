@@ -1,6 +1,9 @@
 import uuid
 
+from fastapi import Depends
 from sqlalchemy.orm import Session
+
+from contact_list_clean_arch.app.config.db import start_session
 from contact_list_clean_arch.app.config.db.contact_schema import ContactSchema
 from contact_list_clean_arch.app.domain.contact.gateway.contact_command_gateway import ContactCommandGateway
 from contact_list_clean_arch.app.domain.contact.gateway.contact_query_gateway import ContactQueryGateway
@@ -8,7 +11,7 @@ from contact_list_clean_arch.app.domain.contact.model.contact import Contact
 
 
 class ContactInMemoryGateway(ContactCommandGateway, ContactQueryGateway):
-    def __init__(self, session: Session):
+    def __init__(self, session: Session = Depends(start_session)):
         super().__init__()
         self.__session = session
 

@@ -1,5 +1,10 @@
+from fastapi import Depends
+
 from contact_list_clean_arch.app.domain.auth.gateway.cryptography_gateway import CryptographyGateway
+from contact_list_clean_arch.app.domain.auth.gateway.lib.cryptography_passlib_gateway import CryptographyPasslibGateway
 from contact_list_clean_arch.app.domain.email.gateway.email_gateway import EmailGateway
+from contact_list_clean_arch.app.domain.email.gateway.http.email_http_gateway import EmailHttpGateway
+from contact_list_clean_arch.app.domain.user.gateway.db.user_in_memory_gateway import UserInMemoryGateway
 from contact_list_clean_arch.app.domain.user.gateway.user_command_gateway import UserCommandGateway
 from contact_list_clean_arch.app.domain.user.model.user import User
 
@@ -18,9 +23,9 @@ class OutputModel:
 
 class CreateUserUseCase:
     def __init__(self,
-                 user_command_gateway: UserCommandGateway,
-                 cryptography_gateway: CryptographyGateway,
-                 email_gateway: EmailGateway):
+                 user_command_gateway: UserCommandGateway = Depends(UserInMemoryGateway),
+                 cryptography_gateway: CryptographyGateway = Depends(CryptographyPasslibGateway),
+                 email_gateway: EmailGateway = Depends(EmailHttpGateway)):
         self.__cryptography_gateway = cryptography_gateway
         self.__user_command_gateway = user_command_gateway
         self.__email_gateway = email_gateway

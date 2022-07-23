@@ -3,8 +3,8 @@ import logging
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
-from contact_list_clean_arch.app.config.factory import get_user_authentication_use_case
-from contact_list_clean_arch.app.domain.auth.use_case.user_authentication_use_case import InputModel
+from contact_list_clean_arch.app.domain.auth.use_case.user_authentication_use_case import InputModel, \
+    UserAuthenticationUseCase
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
@@ -23,7 +23,7 @@ class Response:
 
 
 @router.post("/login", status_code=200)
-def create_user(request: Request, use_case=Depends(get_user_authentication_use_case)) -> Response:
+def create_user(request: Request, use_case: UserAuthenticationUseCase = Depends(UserAuthenticationUseCase)) -> Response:
 
     input_model = InputModel(email=request.email, password=request.password)
 

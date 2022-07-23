@@ -1,6 +1,11 @@
+from fastapi import Depends
+
 from contact_list_clean_arch.app.domain.auth.exception.unauthenticated_exception import UnauthenticatedException
 from contact_list_clean_arch.app.domain.auth.gateway.authorization_token_gateway import AuthorizationTokenGateway
 from contact_list_clean_arch.app.domain.auth.gateway.cryptography_gateway import CryptographyGateway
+from contact_list_clean_arch.app.domain.auth.gateway.lib.authorization_jwt_token import AuthorizationJwtTokenGateway
+from contact_list_clean_arch.app.domain.auth.gateway.lib.cryptography_passlib_gateway import CryptographyPasslibGateway
+from contact_list_clean_arch.app.domain.user.gateway.db.user_in_memory_gateway import UserInMemoryGateway
 from contact_list_clean_arch.app.domain.user.gateway.user_query_gateway import UserQueryGateway
 
 
@@ -17,9 +22,9 @@ class OutputModel:
 
 class UserAuthenticationUseCase:
     def __init__(self,
-                 user_query_gateway: UserQueryGateway,
-                 cryptography_gateway: CryptographyGateway,
-                 authorization_token_gateway: AuthorizationTokenGateway):
+                 user_query_gateway: UserQueryGateway = Depends(UserInMemoryGateway),
+                 cryptography_gateway: CryptographyGateway = Depends(CryptographyPasslibGateway),
+                 authorization_token_gateway: AuthorizationTokenGateway = Depends(AuthorizationJwtTokenGateway)):
 
         self.__user_query_gateway = user_query_gateway
         self.__cryptography_gateway = cryptography_gateway

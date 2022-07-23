@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from contact_list_clean_arch.app.config.factory import get_crytography_gateway
+from contact_list_clean_arch.app.config.security.security_config import get_crypt_context
 from contact_list_clean_arch.app.domain.auth.gateway.lib.authorization_jwt_token import AuthorizationJwtTokenGateway
 from contact_list_clean_arch.app.config.db.contact_schema import ContactSchema
 from contact_list_clean_arch.app.config.db.user_schema import UserSchema
@@ -21,21 +21,9 @@ class AuthInfo:
         self.token = token
 
 
-def _generate_user_schema() -> UserSchema:
-    crytography_gateway = get_crytography_gateway()
-    user = create_test_user()
-
-    return UserSchema(
-        user_id=user.user_id,
-        name=user.name,
-        email=user.email,
-        password=crytography_gateway.hash_password(user.password)
-    )
-
-
 class IntegrationTestCase(TestCase):
     _http_client = TestClient(application)
-
+    _text_crypt_context = get_crypt_context()
     __local_session: Session
     __authorization_token_gateway = AuthorizationJwtTokenGateway()
 
@@ -51,7 +39,7 @@ class IntegrationTestCase(TestCase):
         local_session = start_local_test_session()
         local_session.begin()
 
-        user_schema = _generate_user_schema()
+        user_schema = self._generate_user_schema()
 
         local_session.add(user_schema)
 
@@ -60,6 +48,16 @@ class IntegrationTestCase(TestCase):
         token = self.__authorization_token_gateway.create_token(user_schema.user_id)
 
         return AuthInfo(user_schema=user_schema, token=token)
+
+    def _generate_user_schema(self) -> UserSchema:
+        user = create_test_user()
+
+        return UserSchema(
+            user_id=user.user_id,
+            name=user.name,
+            email=user.email,
+            password=self._text_crypt_context.hash(user.password)
+        )
 
     def create_contact_in_db(self, user_id: str) -> ContactSchema:
         contact = create_test_contact(user_id)

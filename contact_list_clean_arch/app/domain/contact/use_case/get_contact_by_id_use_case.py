@@ -1,7 +1,10 @@
 import logging
 
+from fastapi import Depends
+
 from contact_list_clean_arch.app.domain.contact.exception.contact_not_found_exception import ContactNotFoundException
 from contact_list_clean_arch.app.domain.contact.gateway.contact_query_gateway import ContactQueryGateway
+from contact_list_clean_arch.app.domain.contact.gateway.db.contact_in_memory_gateway import ContactInMemoryGateway
 from contact_list_clean_arch.app.domain.contact.model.contact import Contact
 
 logger = logging.getLogger(__name__)
@@ -19,7 +22,7 @@ class OutputModel:
 
 
 class GetContactByIdUseCase:
-    def __init__(self, contact_query_gateway: ContactQueryGateway):
+    def __init__(self, contact_query_gateway: ContactQueryGateway = Depends(ContactInMemoryGateway)):
         self.contact_query_gateway = contact_query_gateway
 
     def execute(self, input_model: InputModel) -> OutputModel:

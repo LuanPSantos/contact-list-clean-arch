@@ -8,12 +8,6 @@ from contact_list_clean_arch.app.domain.user.model.user import User
 EMAIL_SERVICE_URL = "http://localhost:8080"
 
 
-class Request:
-    def __init__(self, user_name: str, user_email: str):
-        self.user_name = user_name
-        self.user_email = user_email
-
-
 class EmailHttpGateway(EmailGateway):
 
     def send_wellcome_email(self, user: User) -> None:
