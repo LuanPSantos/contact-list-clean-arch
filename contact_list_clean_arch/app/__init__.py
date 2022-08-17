@@ -3,19 +3,19 @@ __version__ = '0.1.0'
 from fastapi import FastAPI, APIRouter
 from requests import HTTPError
 
-from contact_list_clean_arch.app.domain.auth.exception.unauthenticated_exception import UnauthenticatedException
-from contact_list_clean_arch.app.domain.auth.exception.unauthorized_exception import UnauthorizedException
-from contact_list_clean_arch.app.domain.auth.router import user_authentiation_router
-from contact_list_clean_arch.app.config.exception.exception_handler import handle_contact_not_found_exception, \
+from contact_list_clean_arch.app.entity.auth.exception.unauthenticated_exception import UnauthenticatedException
+from contact_list_clean_arch.app.entity.auth.exception.unauthorized_exception import UnauthorizedException
+from contact_list_clean_arch.app.entity.auth.router import user_authentiation_router
+from contact_list_clean_arch.app.infrastructure.config.exception.exception_handler import handle_contact_not_found_exception, \
     handle_exception, \
     handle_user_not_found_exception, handle_unauthorized_exception, handle_unauthenticated_exception, \
     handle_client_http_error
-from contact_list_clean_arch.app.domain.contact.exception.contact_not_found_exception import ContactNotFoundException
-from contact_list_clean_arch.app.domain.contact.router import get_contact_by_id_router
-from contact_list_clean_arch.app.domain.contact.router import create_contact_router
-from contact_list_clean_arch.app.config.db import Base, engine
-from contact_list_clean_arch.app.domain.user.exception.user_not_fount_exception import UserNotFoundException
-from contact_list_clean_arch.app.domain.user.router import create_user_router, get_user_by_id_router
+from contact_list_clean_arch.app.entity.contact.exception.contact_not_found_exception import ContactNotFoundException
+from contact_list_clean_arch.app.entity.contact.router import get_contact_by_id_router
+from contact_list_clean_arch.app.entity.contact.router import create_contact_router
+from contact_list_clean_arch.app.infrastructure.config.db.db_setup import Base, engine
+from contact_list_clean_arch.app.entity.user.exception.user_not_fount_exception import UserNotFoundException
+from contact_list_clean_arch.app.entity.user.router import create_user_router, get_user_by_id_router
 
 Base.metadata.create_all(engine)
 

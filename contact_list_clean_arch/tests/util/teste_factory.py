@@ -1,8 +1,8 @@
 import uuid
 from random import randint
 
-from contact_list_clean_arch.app.domain.contact.model.contact import Contact
-from contact_list_clean_arch.app.domain.user.model.user import User
+from contact_list_clean_arch.app.entity.contact.model.contact import Contact
+from contact_list_clean_arch.app.entity.user.model.user import User
 from contact_list_clean_arch.tests.util.constants import PLAIN_PASSWORD
 
 
