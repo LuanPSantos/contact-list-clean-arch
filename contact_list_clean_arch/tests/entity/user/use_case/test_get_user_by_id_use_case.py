@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 
 from contact_list_clean_arch.app.entity.user.exception.user_not_fount_exception import UserNotFoundException
 from contact_list_clean_arch.app.entity.user.model.user import User
-from contact_list_clean_arch.app.use_case.user.get_user_by_id_use_case import GetUserByIdUseCase, InputModel
+from contact_list_clean_arch.app.entity.user.use_case.get_user_by_id_use_case import GetUserByIdUseCase, InputModel
 from contact_list_clean_arch.tests.util.mock_path import user_query_gateway_path
 
 

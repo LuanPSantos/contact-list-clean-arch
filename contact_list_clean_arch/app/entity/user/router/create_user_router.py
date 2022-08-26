@@ -3,7 +3,7 @@ import logging
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 
-from contact_list_clean_arch.app.use_case.user.create_user_use_case import InputModel, CreateUserUseCase
+from contact_list_clean_arch.app.entity.user.use_case.create_user_use_case import InputModel, CreateUserUseCase
 
 router = APIRouter()
 logger = logging.getLogger(__name__)

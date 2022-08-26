@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
-from contact_list_clean_arch.app.use_case.user.create_user_use_case import CreateUserUseCase, InputModel
+from contact_list_clean_arch.app.entity.user.use_case.create_user_use_case import CreateUserUseCase, InputModel
 from contact_list_clean_arch.tests.util.constants import ONE
 from contact_list_clean_arch.tests.util.mock_path import user_command_gateway_path, cryptography_gateway_path, \
     email_gateway_path

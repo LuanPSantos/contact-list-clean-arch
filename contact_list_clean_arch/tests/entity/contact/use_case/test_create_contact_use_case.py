@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 
 from contact_list_clean_arch.app.entity.contact.model.contact import Contact
 from contact_list_clean_arch.app.entity.user.model.user import User
-from contact_list_clean_arch.app.use_case.contact.create_contact_use_case import CreateContactUseCase, InputModel
+from contact_list_clean_arch.app.entity.contact.use_case.create_contact_use_case import CreateContactUseCase, InputModel
 from contact_list_clean_arch.tests.util.constants import FIRST
 from contact_list_clean_arch.tests.util.mock_path import contact_command_gateway_path, user_query_gateway_path
 

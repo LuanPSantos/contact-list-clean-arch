@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from contact_list_clean_arch.app.entity.auth.middleware.authorization_meddleware import JWTBearerMiddleware
 from pydantic import BaseModel
 from contact_list_clean_arch.app.entity.contact.model.contact import Contact
-from contact_list_clean_arch.app.use_case.contact.create_contact_use_case import CreateContactUseCase, InputModel
+from contact_list_clean_arch.app.entity.contact.use_case.create_contact_use_case import CreateContactUseCase, InputModel
 
 router = APIRouter()
 logger = logging.getLogger(__name__)

@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 
 from contact_list_clean_arch.app.entity.auth.middleware.authorization_meddleware import JWTBearerMiddleware
 from contact_list_clean_arch.app.entity.user.model.user import User
-from contact_list_clean_arch.app.use_case.user.get_user_by_id_use_case import InputModel, GetUserByIdUseCase
+from contact_list_clean_arch.app.entity.user.use_case.get_user_by_id_use_case import InputModel, GetUserByIdUseCase
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
